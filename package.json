@@ -5,6 +5,7 @@
   "main": "dest/index.js",
   "types": "dest/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "prepare" : "npm run build",
     "prepublishOnly" : "npm test && npm run lint",
     "preversion" : "npm run lint",
