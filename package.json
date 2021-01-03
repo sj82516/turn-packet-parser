@@ -1,23 +1,30 @@
 {
   "name": "turn-packet-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dest/index.js",
   "types": "dest/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
     "test": "mocha --require ts-node/register test/*.spec.ts",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\" ",
     "lint": "tslint --fix -p tsconfig.json"
   },
-  "files": ["dest/**/*"],
+  "files": [
+    "dest/**/*"
+  ],
   "typings": "./types/index.d.ts",
-  "keywords": ["webrtc", "turn", "stun", "parser"],
+  "keywords": [
+    "webrtc",
+    "turn",
+    "stun",
+    "parser"
+  ],
   "author": "yuanchieh, cheng",
   "license": "ISC",
   "dependencies": {},
