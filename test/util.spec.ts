@@ -17,3 +17,11 @@ describe('fromHexStringToNumber', ()=>{
         chai.expect(num).to.be.eql(31);
     });
 });
+
+describe('fromHexStringToAscii', ()=>{
+    it('expect hex string to ascii', ()=>{
+        const rawHexString = "556e617574686f72697a6564";
+        const asciiString = util.fromHexToAscii(rawHexString);
+        chai.expect(asciiString).to.be.eql("Unauthorized");
+    });
+})
