@@ -3,7 +3,7 @@ import {
     MessageMethod,
     StunMessage,
     AttributeList,
-    Attribute,
+    ChannelData,
     ErrorAttribute,
     AddressAttributeName,
     BasicAttributeName,
@@ -15,7 +15,12 @@ import * as util from './util';
 
 const MagicCookie = '2112a442';
 export default class TurnPacketParser {
-    parse(rawData: string): StunMessage | null {
+    parse(rawData: string): ChannelData | StunMessage | null {
+        const channelData = this.parseChannelData(rawData);
+        if(channelData){
+            return channelData
+        }
+        
         const rawHeader = rawData.slice(0, 4);
         const rawMessageLength = rawData.slice(4, 8);
         const rawMagicCookie = rawData.slice(8, 16);
@@ -40,6 +45,23 @@ export default class TurnPacketParser {
         }
 
         return stunMessage;
+    }
+
+    // https://tools.ietf.org/html/rfc8656
+    // 3.5
+    // The packet format of ChannelData is different with other stun/turn packet
+    // The first four byte is for channel number
+    // the detection is quite simply , if the channel number is in valid range, from 0x4000 through 0x4FFF. we consinder it as valid message
+    private parseChannelData(rawData): ChannelData | null{
+        const channelNumber= util.fromHexStringToNumber(rawData.slice(0,4));
+        if(channelNumber > 0x4fff || channelNumber < 0x4000){
+            return null;
+        }
+
+        return {
+            number: channelNumber,
+            length: util.fromHexStringToNumber(rawData.slice(4,8))
+        }
     }
 
     private parseHeader(

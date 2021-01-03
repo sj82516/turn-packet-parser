@@ -1,3 +1,8 @@
+export interface ChannelData {
+  length: number,
+  number: number
+}
+
 export interface StunMessage {
   class: '' | keyof typeof MessageClass;
   method: '' | keyof typeof MessageMethod;
