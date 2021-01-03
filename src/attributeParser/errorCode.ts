@@ -5,11 +5,7 @@ export default function parseErrorCode(attribute: BasicAttribute, errorCodeData:
     // preserved 0000
     const errorClass = util.fromHexStringToNumber(errorCodeData.slice(4, 6));
     const errorCode = util.fromHexStringToNumber(errorCodeData.slice(6, 8));
-    console.log({
-        errorCodeData,
-        errorClass,
-        errorCode
-    })
+
     const errorAttribute: ErrorAttribute = {
         code: formErrorCode(errorClass, errorCode),
         reason: util.fromHexToAscii(errorCodeData.slice(8)),
