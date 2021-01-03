@@ -15,7 +15,7 @@ export function fromHexStringToIp(rawIp: string, ipFamily: number): string | Err
 
 function sliceArrayToBatch(arr: string[], sliceLength: number): string[][] {
   const newArr: string[][] = [];
-  for (let i = 0; i < arr.length;) {
+  for (let i = 0; i < arr.length; ) {
     newArr.push(arr.slice(i, i + sliceLength));
     i += sliceLength;
   }
@@ -29,7 +29,7 @@ export function fromHexStringToNumber(hexString: string): number {
 
 export function fromHexToAscii(hexString: string): string {
   let str = '';
-  for (var i = 0; (i < hexString.length && hexString.substr(i, 2) !== '00'); i += 2)
+  for (let i = 0; i < hexString.length && hexString.substr(i, 2) !== '00'; i += 2)
     str += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
   return str;
 }

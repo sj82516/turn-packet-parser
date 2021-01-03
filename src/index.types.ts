@@ -1,6 +1,6 @@
 export interface ChannelData {
-  length: number,
-  number: number
+  length: number;
+  number: number;
 }
 
 export interface StunMessage {
@@ -73,8 +73,8 @@ export interface BasicAttribute {
 }
 
 export interface ErrorAttribute extends BasicAttribute {
-  code: string,
-  reason: string
+  code: string;
+  reason: string;
 }
 
 export interface AddressAttribute extends BasicAttribute {
