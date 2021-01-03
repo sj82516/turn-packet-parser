@@ -4,17 +4,12 @@ import {
   StunMessage,
   AttributeList,
   ChannelData,
-  ErrorAttribute,
   AddressAttributeName,
   BasicAttributeName,
-  BasicAttribute,
-  AddressAttribute,
   XorAddressAttributeName,
-  Attribute,
-  AttributeName,
 } from './index.types';
 
-import { xorAddress, errorCode } from './attributeParser';
+import { xorAddress as parseXorAddress, errorCode as parseErrorCode } from './attributeParser';
 
 import * as util from './util';
 
@@ -134,7 +129,7 @@ export default class TurnPacketParser {
       switch (attributeType) {
         case 'address':
         case 'xorAddress':
-          attribute = xorAddress(
+          attribute = parseXorAddress(
             attribute,
             rawAttributeData,
             idx,
@@ -144,7 +139,7 @@ export default class TurnPacketParser {
           );
           break;
         case 'error':
-          attribute = errorCode(attribute, rawData);
+          attribute = parseErrorCode(attribute, rawData);
           break;
         case 'basic':
         default:
