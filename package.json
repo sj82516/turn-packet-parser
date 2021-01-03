@@ -18,7 +18,6 @@
   "files": [
     "dest/**/*"
   ],
-  "typings": "./types/index.d.ts",
   "keywords": [
     "webrtc",
     "turn",
