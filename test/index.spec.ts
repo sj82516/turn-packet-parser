@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { assert, expect } from "chai";
 
 import TurnPacketParser from "../src/index";
 import { AddressAttribute, ChannelData, ErrorAttribute, StunMessage } from "../src/index.types";
@@ -33,14 +33,22 @@ describe('', ()=>{
         const turnPacketParser = new TurnPacketParser();
         const rawMessage = '010100542112a4426469794c6c7945666178704e002000080001c8c18d07a443000100080001e9d3ac150001802b000800010d96ac150003802c000800010d97ac15000380220018436f7475726e2d342e352e32202764616e2045696465722780280004eb888df2';
 
-        const stunMessage = <StunMessage>turnPacketParser.parse(rawMessage);
-        
-        expect(stunMessage?.class).eql('response');
-        expect(stunMessage?.method).eql('bind');
-        expect(stunMessage?.transactionId).eql('6469794c6c7945666178704e');
+        const stunMessage = turnPacketParser.parse(rawMessage);
 
-        expect((<AddressAttribute>stunMessage?.attributeList?.xorMappedAddress)?.address).eql('172.21.0.1');
-        expect((<AddressAttribute>stunMessage?.attributeList?.xorMappedAddress)?.port).eql(59859);
+        if(stunMessage?.type === 'stunMessage'){
+            expect(stunMessage.class).eql('response');
+            expect(stunMessage.method).eql('bind');
+            expect(stunMessage.transactionId).eql('6469794c6c7945666178704e');
+
+            if(stunMessage.attributeList?.xorMappedAddress?.type === 'address'){
+                expect(stunMessage.attributeList?.xorMappedAddress?.address).eql('172.21.0.1');
+                expect(stunMessage.attributeList?.xorMappedAddress?.port).eql(59859);
+            } else {
+                throw "attribute type error"
+            }
+        } else {
+            throw "message type error"
+        }
     })
 
     it('parse error code', ()=>{

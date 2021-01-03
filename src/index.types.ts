@@ -1,9 +1,11 @@
 export interface ChannelData {
+  type: 'channelData'
   length: number;
   number: number;
 }
 
 export interface StunMessage {
+  type: 'stunMessage'
   class: '' | keyof typeof MessageClass;
   method: '' | keyof typeof MessageMethod;
   transactionId: string;
@@ -32,8 +34,11 @@ export type AttributeList = {
   [K in AttributeName]?: Attribute;
 };
 
-export type AttributeName = keyof typeof BasicAttributeName | keyof typeof AddressAttributeName;
-
+export type AttributeName = 
+  keyof typeof BasicAttributeName | 
+  keyof typeof AddressAttributeName |
+  keyof typeof XorAddressAttributeName;
+  
 export enum BasicAttributeName {
   changeRequest = 0x0003,
   username = 0x0006,
@@ -52,6 +57,8 @@ export enum BasicAttributeName {
   reservationToken = 0x0022,
   additionalAddressFamily = 0x8000,
   addressErrorCode = 0x8001,
+  software = 0x8022,
+  fingerprint = 0x8028,
   ICMP = 0x8004,
 }
 
@@ -60,6 +67,10 @@ export enum AddressAttributeName {
   responseAddress = 0x0002,
   sourceAddress = 0x0004,
   changedAddress = 0x0005,
+  otherAddress = 0x802c,
+}
+
+export enum XorAddressAttributeName {
   xorPeerAddress = 0x0012,
   xorRelayedAddress = 0x0016,
   xorMappedAddress = 0x0020,
@@ -68,16 +79,19 @@ export enum AddressAttributeName {
 export type Attribute = BasicAttribute | ErrorAttribute | AddressAttribute;
 
 export interface BasicAttribute {
+  type: 'basic',
   length: number;
   value: string;
 }
 
-export interface ErrorAttribute extends BasicAttribute {
+export interface ErrorAttribute extends Omit<BasicAttribute, 'type'> {
+  type: 'error',
   code: string;
   reason: string;
 }
 
-export interface AddressAttribute extends BasicAttribute {
+export interface AddressAttribute extends Omit<BasicAttribute, 'type'> {
+  type: 'address',
   family: number;
   port: number;
   address: string;
