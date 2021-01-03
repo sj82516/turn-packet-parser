@@ -173,14 +173,30 @@ export default class TurnPacketParser {
   // https://tools.ietf.org/html/rfc8489
   // 14.2.  XOR-MAPPED-ADDRESS
   private revertXorIp(rawIp, ipFamily, transactionId): string {
+    // to prevent overflow, revert ip one by one
+    let ip = '';
     if (ipFamily === 1) {
-      return (util.fromHexStringToNumber(rawIp) ^ util.fromHexStringToNumber(MagicCookie)).toString(16);
+        for(let i=0; i<4; i++){
+            const stringStart = 2 * i;
+            const stringEnd = 2 * i + 2;
+            const partIP = (util.fromHexStringToNumber(rawIp.slice(stringStart, stringEnd)) ^ util.fromHexStringToNumber(MagicCookie.slice(stringStart, stringEnd))).toString(16);
+            ip += this.convertPartIpv4ToHex(partIP);
+        }
+      return ip;
     }
 
     const xorString = MagicCookie + transactionId;
-    return (util.fromHexStringToNumber(rawIp) ^ util.fromHexStringToNumber(xorString)).toString(16);
+    for(let i=0; i<6; i++){
+        const stringStart = 4 * i;
+        const stringEnd = 4 * i + 4;
+        ip += (util.fromHexStringToNumber(rawIp.slice(stringStart, stringEnd)) ^ util.fromHexStringToNumber(xorString.slice(stringStart, stringEnd))).toString(16)
+    }
+    return ip;
   }
   private revertXorPort(rawPort): string {
     return (util.fromHexStringToNumber(rawPort) ^ util.fromHexStringToNumber(MagicCookie.slice(0, 4))).toString(16);
+  }
+  private convertPartIpv4ToHex(partIp: string): string{
+    return partIp.length < 2 ? `0${partIp}`:partIp 
   }
 }
