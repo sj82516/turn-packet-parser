@@ -24,7 +24,7 @@ export enum MessageMethod {
 }
 
 export type AttributeList = {
-  [K in AttributeName]?: Attribute<K>;
+  [K in AttributeName]?: Attribute;
 };
 
 export type AttributeName = keyof typeof BasicAttributeName | keyof typeof AddressAttributeName;
@@ -60,11 +60,16 @@ export enum AddressAttributeName {
   xorMappedAddress = 0x0020,
 }
 
-export type Attribute<T> = T extends AddressAttributeName ? AddressAttribute : AddressAttribute;
+export type Attribute = BasicAttribute | ErrorAttribute | AddressAttribute;
 
 export interface BasicAttribute {
   length: number;
   value: string;
+}
+
+export interface ErrorAttribute extends BasicAttribute {
+  code: string,
+  reason: string
 }
 
 export interface AddressAttribute extends BasicAttribute {
