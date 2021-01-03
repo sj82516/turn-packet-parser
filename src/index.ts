@@ -104,7 +104,11 @@ export default class TurnPacketParser {
                 let rawIp =
                     family === 1 ? rawAttributeData.slice(idx + 16, idx + 24) : rawAttributeData.slice(idx + 16, idx + 40);
 
-                const xorAddressAttribute = [0x0012, 0x0016, 0x0020];
+                const xorAddressAttribute = [
+                    AddressAttributeName.xorMappedAddress, 
+                    AddressAttributeName.xorPeerAddress,
+                    AddressAttributeName.xorRelayedAddress
+                ];
 
                 if (xorAddressAttribute.indexOf(attributeName) > -1) {
                     rawIp = this.revertXorIp(rawIp, family, transactionId);
