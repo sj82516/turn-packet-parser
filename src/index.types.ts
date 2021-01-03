@@ -31,7 +31,35 @@ export enum MessageMethod {
 }
 
 export type AttributeList = {
-  [K in AttributeName]?: Attribute;
+  changeRequest?: BasicAttribute,
+  username?: BasicAttribute,
+  password?: BasicAttribute,
+  messageIntegrity?: BasicAttribute,
+  errorCode?: ErrorAttribute,
+  unknownAttributes?: BasicAttribute,
+  reflectedFrom?: BasicAttribute,
+  channelNumber?: BasicAttribute,
+  lifetime?: BasicAttribute,
+  data?: BasicAttribute,
+  requestedAddressFamily?: BasicAttribute,
+  evenPort?: BasicAttribute,
+  requestedTransport?: BasicAttribute,
+  dontFragment?: BasicAttribute,
+  reservationToken?: BasicAttribute,
+  additionalAddressFamily?: BasicAttribute,
+  addressErrorCode?: BasicAttribute,
+  software?: BasicAttribute,
+  fingerprint?: BasicAttribute,
+  ICMP?: BasicAttribute,
+
+  mappedAddress?: AddressAttribute,
+  responseAddress?: AddressAttribute,
+  sourceAddress?: AddressAttribute,
+  changedAddress?: AddressAttribute,
+  otherAddress?: AddressAttribute,
+  xorPeerAddress?: AddressAttribute,
+  xorRelayedAddress?: AddressAttribute,
+  xorMappedAddress?: AddressAttribute,
 };
 
 export type AttributeName =

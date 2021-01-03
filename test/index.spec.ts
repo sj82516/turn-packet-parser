@@ -40,12 +40,8 @@ describe('', ()=>{
             expect(stunMessage.method).eql('bind');
             expect(stunMessage.transactionId).eql('6469794c6c7945666178704e');
 
-            if(stunMessage.attributeList?.xorMappedAddress?.type === 'address'){
-                expect(stunMessage.attributeList?.xorMappedAddress?.address).eql('172.21.0.1');
-                expect(stunMessage.attributeList?.xorMappedAddress?.port).eql(59859);
-            } else {
-                throw "attribute type error"
-            }
+            expect(stunMessage.attributeList?.xorMappedAddress?.address).eql('172.21.0.1');
+            expect(stunMessage.attributeList?.xorMappedAddress?.port).eql(59859);
         } else {
             throw "message type error"
         }
@@ -60,8 +56,8 @@ describe('', ()=>{
         expect(stunMessage?.class).eql('errorResponse');
         expect(stunMessage?.method).eql('allocate');
         expect(stunMessage?.transactionId).eql('49542f6b70462b354a2b7169');
-        expect((<ErrorAttribute>stunMessage?.attributeList?.errorCode)?.code).eql('401');
-        expect((<ErrorAttribute>stunMessage?.attributeList?.errorCode)?.reason).eql('Unauthorized');
+        expect(stunMessage?.attributeList?.errorCode?.code).eql('401');
+        expect(stunMessage?.attributeList?.errorCode?.reason).eql('Unauthorized');
     })
 
     it('parse channel data', ()=>{
