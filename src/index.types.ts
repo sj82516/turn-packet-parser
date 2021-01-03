@@ -78,19 +78,22 @@ export enum XorAddressAttributeName {
 
 export type Attribute = BasicAttribute | ErrorAttribute | AddressAttribute;
 
-export interface BasicAttribute {
-  type: 'basic';
+export interface BaseAttribute {
   length: number;
   value: string;
+  name: string;
+}
+export interface BasicAttribute extends BaseAttribute {
+  type: 'basic';
 }
 
-export interface ErrorAttribute extends Omit<BasicAttribute, 'type'> {
+export interface ErrorAttribute extends BaseAttribute {
   type: 'error';
-  code: string;
-  reason: string;
+  code: string
+  reason: string
 }
 
-export interface AddressAttribute extends Omit<BasicAttribute, 'type'> {
+export interface AddressAttribute extends BaseAttribute {
   type: 'address';
   family: number;
   port: number;
@@ -107,4 +110,8 @@ export enum RequestResponseStunType {
 export enum IndicationStunType {
   Send = '6',
   Data = '7',
+}
+
+export interface Parser {
+  parse(rawAttributeData: string): BaseAttribute
 }
