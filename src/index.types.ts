@@ -1,11 +1,11 @@
 export interface ChannelData {
-  type: 'channelData'
+  type: 'channelData';
   length: number;
   number: number;
 }
 
 export interface StunMessage {
-  type: 'stunMessage'
+  type: 'stunMessage';
   class: '' | keyof typeof MessageClass;
   method: '' | keyof typeof MessageMethod;
   transactionId: string;
@@ -34,11 +34,11 @@ export type AttributeList = {
   [K in AttributeName]?: Attribute;
 };
 
-export type AttributeName = 
-  keyof typeof BasicAttributeName | 
-  keyof typeof AddressAttributeName |
-  keyof typeof XorAddressAttributeName;
-  
+export type AttributeName =
+  | keyof typeof BasicAttributeName
+  | keyof typeof AddressAttributeName
+  | keyof typeof XorAddressAttributeName;
+
 export enum BasicAttributeName {
   changeRequest = 0x0003,
   username = 0x0006,
@@ -79,19 +79,19 @@ export enum XorAddressAttributeName {
 export type Attribute = BasicAttribute | ErrorAttribute | AddressAttribute;
 
 export interface BasicAttribute {
-  type: 'basic',
+  type: 'basic';
   length: number;
   value: string;
 }
 
 export interface ErrorAttribute extends Omit<BasicAttribute, 'type'> {
-  type: 'error',
+  type: 'error';
   code: string;
   reason: string;
 }
 
 export interface AddressAttribute extends Omit<BasicAttribute, 'type'> {
-  type: 'address',
+  type: 'address';
   family: number;
   port: number;
   address: string;

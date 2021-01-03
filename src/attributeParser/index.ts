@@ -1,2 +1,2 @@
-export {default as xorAddress } from './xorAddress'
-export { default as errorCode } from './errorCode'
+export { default as xorAddress } from './xorAddress';
+export { default as errorCode } from './errorCode';
