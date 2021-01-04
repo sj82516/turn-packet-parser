@@ -60,6 +60,20 @@ describe('', ()=>{
         expect(stunMessage?.attributeList?.errorCode?.reason).eql('Unauthorized');
     })
 
+    it('parse create permission', ()=>{
+        const rawMessage = '000800542112a4426c75552f776e76442b54434a001200080001063c8d07a4410006000568656c6c6f000000001400096c6f63616c686f7374000000001500103562306138626364343063323963303400080014a7aca6b10d1381f53ccb9a104442f61d5303b9f4';
+        const turnPacketParser = new TurnPacketParser();
+
+        const stunMessage = <StunMessage>turnPacketParser.parse(rawMessage);
+        expect(stunMessage?.class).eql('request');
+        expect(stunMessage?.method).eql('createPermission');
+        expect(stunMessage?.transactionId).eql('6c75552f776e76442b54434a');
+        expect(stunMessage?.attributeList?.xorPeerAddress?.address).eql('172.21.0.3');
+        expect(stunMessage?.attributeList?.xorPeerAddress?.port).eql(10030);
+        expect(stunMessage?.attributeList?.username?.value).eql('hello');
+        expect(stunMessage?.attributeList?.realm?.value).eql('localhost');
+    })
+
     it('parse channel data', ()=>{
         const turnPacketParser = new TurnPacketParser();
         const rawMessage = '40000222';

@@ -33,3 +33,11 @@ export function fromHexToAscii(hexString: string): string {
     str += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
   return str;
 }
+
+export function fromHexToUtf8(hexString: string): string{
+  const matchResult = hexString.match(/.{1,2}/g);
+  if(matchResult !== null){
+    return decodeURIComponent('%' + matchResult.join('%')).replace(/\0/g, '');
+  }
+  return hexString;
+}

@@ -25,3 +25,11 @@ describe('fromHexStringToAscii', ()=>{
         chai.expect(asciiString).to.be.eql("Unauthorized");
     });
 })
+
+describe('fromHexStringToUtf8', ()=>{
+    it('expect hex string to ascii', ()=>{
+        const rawHexString = "6c6f63616c686f7374";
+        const utf8String = util.fromHexToAscii(rawHexString);
+        chai.expect(utf8String).to.be.eql("localhost");
+    });
+})

@@ -127,7 +127,7 @@ export default class TurnPacketParser {
             });
 
 
-            const attribute = parser.parse(rawAttributeValueData);
+            const attribute = parser.parse();
             attributeList[attribute.name] = attribute;
 
             idx += attributeLength;
@@ -138,7 +138,9 @@ export default class TurnPacketParser {
 
     private parseCurrentAttributeNameAndLength(rawAttributeData: string, idx: number) {
         const attributeNum = util.fromHexStringToNumber(rawAttributeData.slice(idx + 0, idx + 4));
-        const attributeLength = 8 + util.fromHexStringToNumber(rawAttributeData.slice(idx + 4, idx + 8)) * 2;
+        const rawLength = util.fromHexStringToNumber(rawAttributeData.slice(idx + 4, idx + 8));
+        const patchPaddingLength = this.patchPadding(rawLength)
+        const attributeLength = 8 + patchPaddingLength * 2;
         const rawAttributeValueData = rawAttributeData.slice(idx + 8, idx + attributeLength);
 
         return {
@@ -146,5 +148,10 @@ export default class TurnPacketParser {
             attributeLength,
             rawAttributeValueData
         }
+    }
+
+    private patchPadding(length: number){
+        let remain = length % 4;
+        return remain === 0 ? length: length + 4 - remain
     }
 }

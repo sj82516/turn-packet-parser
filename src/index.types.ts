@@ -51,6 +51,8 @@ export type AttributeList = {
   software?: BasicAttribute,
   fingerprint?: BasicAttribute,
   ICMP?: BasicAttribute,
+  realm?: BasicAttribute,
+  nonce?: BasicAttribute,
 
   mappedAddress?: AddressAttribute,
   responseAddress?: AddressAttribute,
@@ -78,6 +80,8 @@ export enum BasicAttributeName {
   channelNumber = 0x000c,
   lifetime = 0x000d,
   data = 0x0013,
+  realm = 0x0014,
+  nonce = 0x0015,
   requestedAddressFamily = 0x0017,
   evenPort = 0x0018,
   requestedTransport = 0x0019,

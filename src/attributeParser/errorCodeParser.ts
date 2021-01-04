@@ -8,14 +8,14 @@ export default class ErrorCodeParser implements Parser {
 
     }
 
-    parse(rawAttributeData) {
+    parse() {
         // preserved 0000
-        const errorClass = util.fromHexStringToNumber(rawAttributeData.slice(4, 6));
-        const errorCode = util.fromHexStringToNumber(rawAttributeData.slice(6, 8));
+        const errorClass = util.fromHexStringToNumber(this.attribute.value.slice(4, 6));
+        const errorCode = util.fromHexStringToNumber(this.attribute.value.slice(6, 8));
 
         const errorAttribute: ErrorAttribute = {
             code: this.formErrorCode(errorClass, errorCode),
-            reason: util.fromHexToAscii(rawAttributeData.slice(8)),
+            reason: util.fromHexToAscii(this.attribute.value.slice(8)),
             ...this.attribute,
             type: 'error',
         };

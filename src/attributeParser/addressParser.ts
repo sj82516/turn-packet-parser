@@ -11,10 +11,10 @@ export default class AddressParser implements Parser {
 
   }
 
-  parse(rawAttributeData) {
-    const family = util.fromHexStringToNumber(rawAttributeData.slice(2, 4));
-    let rawPort = rawAttributeData.slice(4, 8);
-    let rawIp = family === 1 ? rawAttributeData.slice(8, 16) : rawAttributeData.slice(8, 32);
+  parse() {
+    const family = util.fromHexStringToNumber(this.attribute.value.slice(2, 4));
+    let rawPort = this.attribute.value.slice(4, 8);
+    let rawIp = family === 1 ? this.attribute.value.slice(8, 16) : this.attribute.value.slice(8, 32);
 
     if (this.isXor) {
       rawIp = this.revertXorIp(rawIp, family, this.transactionId, this.MagicCookie);

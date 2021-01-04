@@ -1,18 +1,19 @@
 import AddressParser from './addressParser';
 import ErrorCodeParser from './errorCodeParser';
+import ChannelNumberParser from './channelNumberParser';
 import { AddressAttributeName, BaseAttribute, BasicAttributeName, XorAddressAttributeName } from '../index.types';
-import * as util from '../util';
+import TextParser from './textParser';
+import BasicParser from './basicParser';
+
 
 export default class ParserFactory {
     static create(attributeNum, attributeLength, rawAttributeData, {
         transactionId, MagicCookie,
     }) {
-        const rawData = rawAttributeData.slice(8, attributeLength);
-
         const { attributeType, attributeName } = this.detectAttributeType(attributeNum);
         let attribute: BaseAttribute = {
             length: attributeLength,
-            value: rawData,
+            value: rawAttributeData,
             name: attributeName
         };
 
@@ -23,9 +24,14 @@ export default class ParserFactory {
                 return new AddressParser(transactionId, MagicCookie, isXor, attribute)
             case 'error':
                 return new ErrorCodeParser(attribute);
+            case 'channelNumber':
+                return new ChannelNumberParser(attribute);
+            case 'utf8':
+            case 'ascii':
+                return new TextParser(attribute, attributeType);
             case 'basic':
             default:
-                return new ErrorCodeParser(attribute);
+                return new BasicParser(attribute);
         }
     }
 
@@ -42,9 +48,24 @@ export default class ParserFactory {
                 attributeName: AddressAttributeName[attributeNum],
             };
         }
-        if (attributeNum === BasicAttributeName.username) {
+
+        const asciiAttributeList = [
+            BasicAttributeName.password,
+            BasicAttributeName.username
+        ];
+        if (asciiAttributeList.indexOf(attributeNum) > -1) {
             return {
-                attributeType: 'username',
+                attributeType: 'ascii',
+                attributeName: BasicAttributeName[attributeNum],
+            };
+        }
+        
+        const utf8AttributeList = [
+            BasicAttributeName.realm
+        ];
+        if (utf8AttributeList.indexOf(attributeNum) > -1) {
+            return {
+                attributeType: 'utf8',
                 attributeName: BasicAttributeName[attributeNum],
             };
         }
