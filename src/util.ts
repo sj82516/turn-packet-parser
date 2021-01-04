@@ -34,9 +34,9 @@ export function fromHexToAscii(hexString: string): string {
   return str;
 }
 
-export function fromHexToUtf8(hexString: string): string{
+export function fromHexToUtf8(hexString: string): string {
   const matchResult = hexString.match(/.{1,2}/g);
-  if(matchResult !== null){
+  if (matchResult !== null) {
     return decodeURIComponent('%' + matchResult.join('%')).replace(/\0/g, '');
   }
   return hexString;

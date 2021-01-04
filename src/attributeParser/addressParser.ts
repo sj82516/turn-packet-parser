@@ -2,14 +2,7 @@ import { AddressAttribute, BaseAttribute, BasicAttribute, Parser } from '../inde
 import * as util from '../util';
 
 export default class AddressParser implements Parser {
-  constructor(
-    private transactionId,
-    private MagicCookie,
-    private isXor,
-    private attribute: BaseAttribute,
-  ) {
-
-  }
+  constructor(private transactionId, private MagicCookie, private isXor, private attribute: BaseAttribute) {}
 
   parse() {
     const family = util.fromHexStringToNumber(this.attribute.value.slice(2, 4));
@@ -28,8 +21,8 @@ export default class AddressParser implements Parser {
       family,
       port,
       address,
-      ... this.attribute,
-      type: 'address'
+      ...this.attribute,
+      type: 'address',
     };
 
     return addressAttribute;

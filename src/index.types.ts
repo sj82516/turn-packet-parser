@@ -31,37 +31,37 @@ export enum MessageMethod {
 }
 
 export type AttributeList = {
-  changeRequest?: BasicAttribute,
-  username?: BasicAttribute,
-  password?: BasicAttribute,
-  messageIntegrity?: BasicAttribute,
-  errorCode?: ErrorAttribute,
-  unknownAttributes?: BasicAttribute,
-  reflectedFrom?: BasicAttribute,
-  channelNumber?: BasicAttribute,
-  lifetime?: BasicAttribute,
-  data?: BasicAttribute,
-  requestedAddressFamily?: BasicAttribute,
-  evenPort?: BasicAttribute,
-  requestedTransport?: BasicAttribute,
-  dontFragment?: BasicAttribute,
-  reservationToken?: BasicAttribute,
-  additionalAddressFamily?: BasicAttribute,
-  addressErrorCode?: BasicAttribute,
-  software?: BasicAttribute,
-  fingerprint?: BasicAttribute,
-  ICMP?: BasicAttribute,
-  realm?: BasicAttribute,
-  nonce?: BasicAttribute,
+  changeRequest?: BasicAttribute;
+  username?: BasicAttribute;
+  password?: BasicAttribute;
+  messageIntegrity?: BasicAttribute;
+  errorCode?: ErrorAttribute;
+  unknownAttributes?: BasicAttribute;
+  reflectedFrom?: BasicAttribute;
+  channelNumber?: BasicAttribute;
+  lifetime?: BasicAttribute;
+  data?: BasicAttribute;
+  requestedAddressFamily?: BasicAttribute;
+  evenPort?: BasicAttribute;
+  requestedTransport?: BasicAttribute;
+  dontFragment?: BasicAttribute;
+  reservationToken?: BasicAttribute;
+  additionalAddressFamily?: BasicAttribute;
+  addressErrorCode?: BasicAttribute;
+  software?: BasicAttribute;
+  fingerprint?: BasicAttribute;
+  ICMP?: BasicAttribute;
+  realm?: BasicAttribute;
+  nonce?: BasicAttribute;
 
-  mappedAddress?: AddressAttribute,
-  responseAddress?: AddressAttribute,
-  sourceAddress?: AddressAttribute,
-  changedAddress?: AddressAttribute,
-  otherAddress?: AddressAttribute,
-  xorPeerAddress?: AddressAttribute,
-  xorRelayedAddress?: AddressAttribute,
-  xorMappedAddress?: AddressAttribute,
+  mappedAddress?: AddressAttribute;
+  responseAddress?: AddressAttribute;
+  sourceAddress?: AddressAttribute;
+  changedAddress?: AddressAttribute;
+  otherAddress?: AddressAttribute;
+  xorPeerAddress?: AddressAttribute;
+  xorRelayedAddress?: AddressAttribute;
+  xorMappedAddress?: AddressAttribute;
 };
 
 export type AttributeName =
@@ -121,8 +121,8 @@ export interface BasicAttribute extends BaseAttribute {
 
 export interface ErrorAttribute extends BaseAttribute {
   type: 'error';
-  code: string
-  reason: string
+  code: string;
+  reason: string;
 }
 
 export interface AddressAttribute extends BaseAttribute {
@@ -145,5 +145,5 @@ export enum IndicationStunType {
 }
 
 export interface Parser {
-  parse(rawAttributeData: string): BaseAttribute
+  parse(rawAttributeData: string): BaseAttribute;
 }
