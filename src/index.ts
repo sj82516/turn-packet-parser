@@ -139,7 +139,8 @@ export default class TurnPacketParser {
     const rawLength = util.fromHexStringToNumber(rawAttributeData.slice(idx + 4, idx + 8));
     const patchPaddingLength = this.patchPadding(rawLength);
     const attributeLength = 8 + patchPaddingLength * 2;
-    const rawAttributeValueData = rawAttributeData.slice(idx + 8, idx + attributeLength);
+    const attributeValueLength = 8 + rawLength * 2;
+    const rawAttributeValueData = rawAttributeData.slice(idx + 8, idx + attributeValueLength);
 
     return {
       attributeNum,
