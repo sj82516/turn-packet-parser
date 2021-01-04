@@ -54,7 +54,10 @@ export default class ParserFactory {
       };
     }
 
-    const utf8AttributeList = [BasicAttributeName.realm];
+    const utf8AttributeList = [
+      BasicAttributeName.realm,
+      BasicAttributeName.software
+    ];
     if (utf8AttributeList.indexOf(attributeNum) > -1) {
       return {
         attributeType: 'utf8',
